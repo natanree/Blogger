@@ -9,13 +9,16 @@
                     <td>
                         <a href="">Highscores</a>
                     </td>
-                    <td>
-                        <a href="">Login</a>
-                    </td>
+                    {% if current_user.is_authenticated %}
                     <td>
                         <a href="">Logout</a>
                     </td>
-                    <td>Current user is:</td>
+                    {% else %}
+                    <td>
+                        <a href="{{url_for('auth.login')}}">Login</a>
+                    </td>
+                    {% endif %}
+                    <td>Current user is: {{ current_user.username }}</td>
                 </tr>
             </table>
         </div>
