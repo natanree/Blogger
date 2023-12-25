@@ -1,11 +1,22 @@
 <table>
     <tr>
-        <div>{{post.title}}</div>
-    </tr>
-    <tr>
-        <div>{{post.body}}</div>
-    </tr>
-    <tr>
-        <div>Date Posted: {{post.post_datetime}}</div>
+        <td colspan="1">
+            <tr>
+                <div>{{post.title}}</div>
+            </tr>
+            <tr>
+                <div>{{post.body}}</div>
+            </tr>
+            <tr>
+                <div>Date Posted: {{post.post_datetime}}</div>
+            </tr>
+        </td>
+        <td>
+            <div>
+                <a href="{{url_for('routes.delete_post', post_id = post.id)}}">
+                    Delete
+                </a>
+            </div>
+        </td>
     </tr>
 </table>

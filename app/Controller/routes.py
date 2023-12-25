@@ -32,3 +32,15 @@ def post():
         flash("New blog post has been created!")
         return redirect(url_for('routes.index'))
     return render_template('create.html', form = pform)
+
+@bp_routes.route('/delete_post/<post_id>', methods=['GET','POST'])
+@login_required
+def delete_post(post_id):
+    thepost = Post.query.filter_by(id = post_id).first()
+    if (thepost.user_id != current_user.id):
+        flash("This post does not belong to you!")
+        return redirect(url_for('routes.index'))
+    db.session.delete(thepost)
+    db.session.commit()
+    flash('The post has been succesfully deleted!')
+    return redirect(url_for('routes.index'))
