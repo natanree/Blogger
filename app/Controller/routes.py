@@ -44,3 +44,12 @@ def delete_post(post_id):
     db.session.commit()
     flash('The post has been succesfully deleted!')
     return redirect(url_for('routes.index'))
+
+@bp_routes.route('/profile/<user_id>', methods=['GET'])
+@login_required
+def view_profile(user_id):
+    theuser = User.query.filter_by(id = user_id).first()
+    if theuser is None:
+        flash('User does not exist!')
+        return redirect(url_for('routes.index'))
+    return render_template('profile.html', the_user = theuser)

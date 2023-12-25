@@ -4,7 +4,7 @@
             <table>
                 <tr>
                     <td>
-                        <a href="">Profile</a>
+                        <a href="{{url_for('routes.index')}}">Home</a>
                     </td>
                     <td>
                         <a href="{{url_for('routes.post')}}">Post</a>
@@ -18,7 +18,7 @@
                         <a href="{{url_for('auth.login')}}">Login</a>
                     </td>
                     {% endif %}
-                    <td>Current user is: {{ current_user.username }}</td>
+                    <td>Current user is: <a href="{{url_for('routes.view_profile', user_id = current_user.id)}}">{{ current_user.username }}</a></td>
                 </tr>
             </table>
         </div>

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <p>Username: {{ the_user.username }}</p>
+    <p>First Name: {{ the_user.first_name }}</p>
+    <p>Last Name: {{ the_user.last_name }}</p>
+    <p>Email: {{the_user.email }}</p>
+    <p>Join Date: {{ the_user.join_Date }}</p>
+    <a href="{{url_for('routes.index')}}">Return to Main Menu</a>
+{% endblock %}
