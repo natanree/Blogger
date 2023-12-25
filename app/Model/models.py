@@ -1,7 +1,7 @@
 from app import db, login
 
 from flask_login import UserMixin
-from datetime import date
+from datetime import date, datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 
 @login.user_loader
@@ -17,6 +17,7 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(64))
     email = db.Column(db.String(128))
     join_date = db.Column(db.Date, default = date.today)
+    posts = db.Relationship('Post', backref='poster', lazy='dynamic')
 
     def __repr__(self):
         return '<User {} - {}'.format(self.id,self.username)
@@ -32,3 +33,11 @@ class User(db.Model, UserMixin):
     
     def get_verification(self, verification):
         return check_password_hash(self.verification_hash, verification)
+    
+class Post(db.Model):
+    __tablename__='post'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200))
+    body = db.Column(db.String(1000))
+    post_datetime = db.Column(db.DateTime, default = datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
