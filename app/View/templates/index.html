@@ -2,5 +2,8 @@
 
 {% block content %}
     <h1>Welcome to Blogger</h1>
-    <h2>Number of posts:</h2>
+    <h2>Number of posts: {{ posts_query.count() }}</h2>
+    {% for post in posts_query.all() %}
+        {% include '_post.html' %}
+    {% endfor %}
 {% endblock %}
