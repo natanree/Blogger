@@ -1,4 +1,9 @@
 <html>
+    <head>
+        <title>Welcome to Blogger</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+        {{ moment.include_moment() }}
+    </head>
     <body>
         <div>
             <table>

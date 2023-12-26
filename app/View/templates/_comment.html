@@ -1,0 +1,11 @@
+<table>
+    <tr>
+        <div>{{comment.body}}</div>
+    </tr>
+    <tr>
+        <div>Date Commented: {{moment(comment.post_datetime).format('lll')}}</div>
+    </tr>
+    <tr>
+        <div>Commented by: {{comment.commenter.username}}</div>
+    </tr>
+</table>

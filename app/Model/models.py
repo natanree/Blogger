@@ -18,6 +18,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(128))
     join_date = db.Column(db.Date, default = date.today)
     posts = db.Relationship('Post', backref='poster', lazy='dynamic')
+    comments = db.Relationship('Comment', backref='commenter', lazy='dynamic')
 
     def __repr__(self):
         return '<User {} - {}'.format(self.id,self.username)
@@ -40,4 +41,13 @@ class Post(db.Model):
     title = db.Column(db.String(200))
     body = db.Column(db.String(1000))
     post_datetime = db.Column(db.DateTime, default = datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    comments = db.Relationship('Comment', backref='post', lazy='dynamic')
+
+class Comment(db.Model):
+    __tablename__='comment'
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.String(1000))
+    post_datetime = db.Column(db.DateTime, default = datetime.utcnow)
+    post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

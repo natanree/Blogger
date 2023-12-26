@@ -8,8 +8,8 @@ from flask_login import login_required, current_user
 from flask import current_app as app
 
 from app import db
-from app.Model.models import User, Post
-from app.Controller.forms import PostForm
+from app.Model.models import User, Post, Comment
+from app.Controller.forms import PostForm, CommentForm
 
 bp_routes = Blueprint('routes', __name__)
 bp_routes.template_folder = Config.TEMPLATE_FOLDER
@@ -31,7 +31,7 @@ def post():
         db.session.commit()
         flash("New blog post has been created!")
         return redirect(url_for('routes.index'))
-    return render_template('create.html', form = pform)
+    return render_template('create_post.html', form = pform)
 
 @bp_routes.route('/delete_post/<post_id>', methods=['GET','POST'])
 @login_required
@@ -53,3 +53,19 @@ def view_profile(user_id):
         flash('User does not exist!')
         return redirect(url_for('routes.index'))
     return render_template('profile.html', the_user = theuser)
+
+@bp_routes.route('/comment/<post_id>', methods=['GET','POST'])
+@login_required
+def comment(post_id):
+    thepost = Post.query.filter_by(id = post_id).first()
+    if thepost is None:
+        flash('Post does not exist!')
+        return redirect(url_for('routes.index'))
+    cform = CommentForm()
+    if cform.validate_on_submit():
+        thecomment = Comment(body = cform.body.data, post_id = thepost.id, user_id = current_user.id)
+        db.session.add(thecomment)
+        db.session.commit()
+        flash('Comment created successfully')
+        return redirect(url_for('routes.index'))
+    return render_template('create_comment.html', form=cform, post=thepost)
