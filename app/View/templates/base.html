@@ -16,7 +16,7 @@
                     </td>
                     {% if current_user.is_authenticated %}
                     <td style="width: 25%">
-                        <a class="nav-a" href="">Logout</a>
+                        <a class="nav-a" href="{{url_for('auth.logout')}}">Logout</a>
                     </td>
                     {% else %}
                     <td style="width:25%">

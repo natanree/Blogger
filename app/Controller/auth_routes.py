@@ -4,7 +4,7 @@ import random, string
 
 from flask import Blueprint, redirect, url_for, flash, render_template
 from config import Config
-from flask_login import current_user, login_user
+from flask_login import current_user, login_user, login_required, logout_user
 from app.Controller.auth_forms import RegistrationForm, LoginForm
 from app.Model.models import User
 from app import db
@@ -41,3 +41,9 @@ def login():
         login_user(user, remember = lform.remember_me.data)
         return redirect(url_for('routes.index'))
     return render_template('login.html', form = lform)
+
+@bp_auth.route('/logout',methods=['GET','POST'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('routes.index'))
