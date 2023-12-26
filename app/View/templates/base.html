@@ -24,10 +24,18 @@
                     </td>
                     {% endif %}
                     <td style="width:25%">
-                        <a class="nav-a" href="{{url_for('routes.view_profile', user_id = current_user.id)}}">
-                            Current user is:
-                            {{ current_user.username }}
-                        </a>
+                        {% if not current_user.is_authenticated %}
+                            <a class="nav-a" href="">
+                                Current user is:
+                                {{ current_user.username }}
+                            </a>
+                        {% else %}
+                            <a class="nav-a" href="{{url_for('routes.view_profile', user_id = current_user.id)}}">
+                                Current user is:
+                                {{ current_user.username }}
+                            </a>
+                        {% endif %}
+
                     </td>
                 </tr>
             </table>
