@@ -1,0 +1,21 @@
+.nav-container {
+    background-color: grey;
+    text-align: center;
+    padding: 10px;
+}
+
+.nav-a{
+    color: white;
+    padding: 5px 10px 5px 10px;
+    text-decoration: none;
+}
+
+.nav-a:hover {
+    background-color: lightgrey;
+    border-radius: 3px;
+}
+
+.nav-table {
+    text-align: center;
+    width: 100%;
+}

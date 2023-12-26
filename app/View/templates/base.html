@@ -1,29 +1,34 @@
 <html>
     <head>
-        <title>Welcome to Blogger</title>
+        <title>Blogger</title>
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
         {{ moment.include_moment() }}
     </head>
     <body>
-        <div>
-            <table>
+        <div class="nav-container">
+            <table class="nav-table">
                 <tr>
-                    <td>
-                        <a href="{{url_for('routes.index')}}">Home</a>
+                    <td style="width: 25%;">
+                        <a class="nav-a" href="{{url_for('routes.index')}}">Home</a>
                     </td>
-                    <td>
-                        <a href="{{url_for('routes.post')}}">Post</a>
+                    <td style="width: 25%;">
+                        <a class="nav-a" href="{{url_for('routes.post')}}">Post</a>
                     </td>
                     {% if current_user.is_authenticated %}
-                    <td>
-                        <a href="">Logout</a>
+                    <td style="width: 25%">
+                        <a class="nav-a" href="">Logout</a>
                     </td>
                     {% else %}
-                    <td>
-                        <a href="{{url_for('auth.login')}}">Login</a>
+                    <td style="width:25%">
+                        <a class="nav-a" href="{{url_for('auth.login')}}">Login</a>
                     </td>
                     {% endif %}
-                    <td>Current user is: <a href="{{url_for('routes.view_profile', user_id = current_user.id)}}">{{ current_user.username }}</a></td>
+                    <td style="width:25%">
+                        <a class="nav-a" href="{{url_for('routes.view_profile', user_id = current_user.id)}}">
+                            Current user is:
+                            {{ current_user.username }}
+                        </a>
+                    </td>
                 </tr>
             </table>
         </div>
