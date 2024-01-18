@@ -19,3 +19,30 @@
     text-align: center;
     width: 100%;
 }
+
+.post-table {
+    margin-left: auto;
+    margin-right: auto;
+    width: 60%;
+    border: 1px solid black;
+    text-align: center;
+    border-collapse: collapse;
+}
+
+.post-title {
+    border: 1px solid black;
+    background-color: lightgray;
+    font-size: large;
+}
+.post-body {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+.post-button {
+    text-decoration: none;
+    color: black;
+}
+.comment-box {
+    border: 1px solid black;
+    border-collapse: collapse;
+}

@@ -37,6 +37,9 @@ def post():
 @login_required
 def delete_post(post_id):
     thepost = Post.query.filter_by(id = post_id).first()
+    if (thepost is None):
+        flash("Post does not exist")
+        return redirect(url_for('routes.index'))
     if (thepost.user_id != current_user.id):
         flash("This post does not belong to you!")
         return redirect(url_for('routes.index'))
@@ -69,3 +72,19 @@ def comment(post_id):
         flash('Comment created successfully')
         return redirect(url_for('routes.index'))
     return render_template('create_comment.html', form=cform, post=thepost)
+
+@bp_routes.route('/comments/<post_id>', methods=['GET','POST'])
+@login_required
+def comments(post_id):
+    thepost = Post.query.filter_by(id = post_id).first()
+    if thepost is None:
+        flash('Post does not exist!')
+        return redirect(url_for('routes.index'))
+    cform = CommentForm()
+    if cform.validate_on_submit():
+        thecomment = Comment(body = cform.body.data, post_id = thepost.id, user_id = current_user.id)
+        db.session.add(thecomment)
+        db.session.commit()
+        flash('Comment created successfully')
+        return redirect(url_for('routes.comments',post_id=thepost.id))
+    return render_template('comments.html', form=cform, post=thepost)

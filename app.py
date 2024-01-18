@@ -1,5 +1,5 @@
 from app import create_app, db
-from app.Model.models import User
+from app.Model.models import User, Post
 import sys
 
 app = create_app()
@@ -18,6 +18,8 @@ def initDB(*args,**kwargs):
             user.set_verification('ifawvcKvBd')
             db.session.add(user)
             db.session.commit()
+            
+
         
 if __name__ == "__main__":
     app.run(debug=True)

@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div>
+    <table class="post-table">
         {% include '_post.html' %}
-    </div>
-    {% if form %}
+    </table>
+    <div style="text-align: center;">
+        <button>
+            <a href="{{url_for('routes.index')}}" class="post-button">Return to Main Menu</a>
+        </button>
+        {% if form %}
         <form action="" method="POST">
             {{form.hidden_tag()}}
             <div>
@@ -17,5 +21,11 @@
                 <p>{{form.submit()}}</p>
             </div>
         </form>
-    {% endif %}
+        {% endif %}
+    </div>
+    <table class="post-table">
+        {% for comment in post.comments %}
+            {% include '_comment.html' %}
+        {% endfor %}
+    </table>
 {% endblock %}

@@ -1,11 +1,11 @@
-<table>
+<td class="comment-box">
     <tr>
-        <div>{{comment.body}}</div>
+        <td>{{comment.body}}</td>
     </tr>
     <tr>
-        <div>Date Commented: {{moment(comment.post_datetime).format('lll')}}</div>
+        <td>Date Commented: {{moment(comment.post_datetime).format('lll')}}</td>
     </tr>
     <tr>
-        <div>Commented by: {{comment.commenter.username}}</div>
+        <td>Commented by: {{comment.commenter.username}}</td>
     </tr>
-</table>
+</td>

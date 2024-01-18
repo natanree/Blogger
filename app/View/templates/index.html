@@ -1,26 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Welcome to Blogger</h1>
-    <h2>Number of posts: {{ posts_query.count() }}</h2>
-    {% for post in posts_query.all() %}
-        <table style="width: 100%;">
-            <tr>
-                <td style="width: 80%;">
-                    {% include '_post.html' %}
-                </td>
-                <td style="width:20%">
-                    <a href="url_for('routes.delete_post')">Delete</a>
-                </td>
-            </tr>
-        </table>
-        <table>
-            <tr>
-                Comments:
-            </tr>
-            {% for comment in post.comments %}
-                {% include '_comment.html' %}
+    <div style="text-align: center;">
+        <h1>Welcome to Blogger</h1>
+        <h2>Number of posts: {{ posts_query.count() }}</h2>
+        <table class="post-table">
+            {% for post in posts_query.all() %}
+                {% include '_post.html' %}
+                <tr>
+                    <td>
+                        <a href="{{url_for('routes.comments',post_id=post.id)}}">Comments: {{ post.comments.count() }}</a>
+                    </td>
+                </tr>
             {% endfor %}
         </table>
-    {% endfor %}
+    </div>
 {% endblock %}

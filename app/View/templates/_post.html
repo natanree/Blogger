@@ -1,11 +1,18 @@
-<table>
+<tr>
+    <th class="post-title">{{post.title}}</th>
+</tr>
+<tr>
+    <td class="post-body">{{post.body}}</td>
+</tr>
+<tr>
+    <td>Date Posted: {{moment(post.post_datetime).format('lll')}}</td>
+</tr>
+{% if post.user_id == current_user.id %}
     <tr>
-        <div>{{post.title}}</div>
+        <td>
+            <button>
+                <a href="{{url_for('routes.delete_post',post_id=post.id)}}" class="post-button">Delete</a>
+            </button>
+        </td>
     </tr>
-    <tr>
-        <div>{{post.body}}</div>
-    </tr>
-    <tr>
-        <div>Date Posted: {{moment(post.post_datetime).format('lll')}}</div>
-    </tr>
-</table>
+{% endif %}
