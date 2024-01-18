@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <p>Username: {{ the_user.username }}</p>
-    <p>First Name: {{ the_user.first_name }}</p>
-    <p>Last Name: {{ the_user.last_name }}</p>
-    <p>Email: {{the_user.email }}</p>
-    <p>Join Date: {{ the_user.join_Date }}</p>
-    <a href="{{url_for('routes.index')}}">Return to Main Menu</a>
+    <div style="text-align:center">
+        <p>Username: {{ the_user.username }}</p>
+        <p>First Name: {{ the_user.first_name }}</p>
+        <p>Last Name: {{ the_user.last_name }}</p>
+        <p>Email: {{the_user.email }}</p>
+        <p>Join Date: {{ the_user.join_Date }}</p>
+        <button>
+            <a href="{{url_for('routes.index')}}" class="post-button">Return to Main Menu</a>
+        </button>
+        <button>
+            <a href="{{url_for('auth.edit_profile',user_id = the_user.id)}}" class="post-button">Edit Profile</a>
+        </button>
+    </div>
 {% endblock %}
