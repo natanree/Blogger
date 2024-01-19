@@ -22,6 +22,8 @@ def register():
         user.set_password(rform.password.data)
         ver = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
         user.set_verification(ver)
+        for tag in rform.tags.data:
+            user.preferred_tags.append(tag)
         db.session.add(user)
         db.session.commit()
         flash('Congratulations! You are now a registered user. Your verification code is: {} Please save this somewhere!'.format(ver))
@@ -63,12 +65,16 @@ def edit_profile(user_id):
         if (user.get_password(eform.password.data)==False):
             flash('Invalid password')
             return redirect(url_for('auth.edit_profile', user_id=user.id))
-        if (eform.new_password.data is not None):
+        if (eform.new_password.data != ""):
             user.set_password(eform.new_password.data)
         user.first_name = eform.first_name.data
         user.last_name = eform.last_name.data
         user.email = eform.email.data
         user.username = eform.username.data
+        for tag in user.preferred_tags:
+            user.preferred_tags.remove(tag)
+        for tag in eform.tags.data:
+            user.preferred_tags.append(tag)
         db.session.commit()
         flash('Your changes have been saved!')
         return redirect(url_for('routes.view_profile',user_id=user.id))
@@ -77,4 +83,7 @@ def edit_profile(user_id):
         eform.first_name.data = user.first_name
         eform.last_name.data = user.last_name
         eform.email.data = user.email
+        for tag in user.preferred_tags:
+            eform.tags.data.append(tag)
+        
     return render_template('edit_profile.html', form=eform)

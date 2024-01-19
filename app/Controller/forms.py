@@ -10,6 +10,7 @@ def get_tags():
 
 def get_tag_name(tag):
     return tag.name
+
 class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
     body = TextAreaField('Body', validators=[DataRequired()])

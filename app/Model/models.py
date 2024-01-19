@@ -12,6 +12,10 @@ post_tag = db.Table('post_tag',
                     db.Column('post_id',db.Integer,db.ForeignKey('post.id')),
                     db.Column('tag_id',db.Integer,db.ForeignKey('tag.id')))
 
+user_tag = db.Table('user_tag',
+                    db.Column('user_id',db.Integer,db.ForeignKey('user.id')),
+                    db.Column('tag_id',db.Integer,db.ForeignKey('tag.id')))
+
 class User(db.Model, UserMixin):
     __tablename__='user'
     id = db.Column(db.Integer, primary_key=True)
@@ -24,6 +28,12 @@ class User(db.Model, UserMixin):
     join_date = db.Column(db.Date, default = date.today)
     posts = db.Relationship('Post', backref='poster', lazy='dynamic')
     comments = db.Relationship('Comment', backref='commenter', lazy='dynamic')
+    preferred_tags = db.Relationship(
+        'Tag', secondary = user_tag,
+        primaryjoin=(user_tag.c.user_id == id),
+        backref = db.backref('user_tag',lazy='dynamic'),
+        lazy='dynamic'
+    )
 
     def __repr__(self):
         return '<User {} - {}'.format(self.id,self.username)

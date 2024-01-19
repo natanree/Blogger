@@ -42,6 +42,12 @@
                 <span>{{ error }}</span>
             {% endfor %}
 
+            <p>{{form.tags.label}}</p>
+            <p>{{form.tags()}}</p>
+            {% for error in form.tags.errors %}
+                <span style="color:red">[{{error}}]</span>
+            {% endfor %}
+
         <p>{{ form.submit() }}</p>
     </form>
     {% endif %}

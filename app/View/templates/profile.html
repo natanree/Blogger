@@ -7,6 +7,11 @@
         <p>Last Name: {{ the_user.last_name }}</p>
         <p>Email: {{the_user.email }}</p>
         <p>Join Date: {{ the_user.join_Date }}</p>
+        <p>Preferred Tags: 
+            {% for tag in the_user.preferred_tags %}
+                <li>{{tag.name}}</li>
+            {% endfor %}
+        </p>
         <button>
             <a href="{{url_for('routes.index')}}" class="post-button">Return to Main Menu</a>
         </button>
