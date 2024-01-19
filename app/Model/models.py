@@ -7,6 +7,11 @@ from werkzeug.security import generate_password_hash, check_password_hash
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
+
+post_tag = db.Table('post_tag',
+                    db.Column('post_id',db.Integer,db.ForeignKey('post.id')),
+                    db.Column('tag_id',db.Integer,db.ForeignKey('tag.id')))
+
 class User(db.Model, UserMixin):
     __tablename__='user'
     id = db.Column(db.Integer, primary_key=True)
@@ -43,6 +48,11 @@ class Post(db.Model):
     post_datetime = db.Column(db.DateTime, default = datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     comments = db.Relationship('Comment', backref='post', lazy='dynamic')
+    tags = db.Relationship(
+        'Tag', secondary=post_tag,
+        primaryjoin=(post_tag.c.post_id == id),
+        backref = db.backref('post_tag',lazy='dynamic'),
+        lazy='dynamic')
 
 class Comment(db.Model):
     __tablename__='comment'
@@ -51,3 +61,8 @@ class Comment(db.Model):
     post_datetime = db.Column(db.DateTime, default = datetime.utcnow)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+class Tag(db.Model):
+    __tablename__='tag'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))

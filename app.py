@@ -1,5 +1,5 @@
 from app import create_app, db
-from app.Model.models import User, Post
+from app.Model.models import User, Post, Tag
 import sys
 
 app = create_app()
@@ -18,8 +18,12 @@ def initDB(*args,**kwargs):
             user.set_verification('ifawvcKvBd')
             db.session.add(user)
             db.session.commit()
-            
-
+        if Tag.query.count() == 0:
+            tags = ['tech', 'diary']
+            for tag in tags:
+                theTag = Tag(name=tag)
+                db.session.add(theTag)
+            db.session.commit()
         
 if __name__ == "__main__":
     app.run(debug=True)
