@@ -31,8 +31,10 @@ class LoginForm(FlaskForm):
 
 class EditProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password')
-    password2 = PasswordField('Repeat Password', validators=[EqualTo('password')])
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField('Repeat Password', validators=[DataRequired(),EqualTo('password')])
+    new_password = PasswordField('New Password')
+    new_password2 = PasswordField('Repeat New Password', validators=[EqualTo('new_password')])
     first_name = StringField('First Name', validators=[DataRequired()])
     last_name = StringField('Last Name', validators=[DataRequired()])
     email = StringField('Email',validators=[DataRequired(),Email()])

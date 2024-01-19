@@ -20,6 +20,18 @@
                 <p>{{ form.password2() }}</p>
                 {% for error in form.password2.errors %}
                     <span>{{ error }}</span>
+                {% endfor %}       
+
+                <p>{{ form.new_password.label }}</p>
+                <p>{{ form.new_password() }}</p>
+                {% for error in form.new_password.errors %}
+                    <span>{{ error }}</span>
+                {% endfor %}
+
+                <p>{{ form.new_password2.label }}</p>
+                <p>{{ form.new_password2() }}</p>
+                {% for error in form.new_password2.errors %}
+                    <span>{{ error }}</span>
                 {% endfor %}        
                 
                 <p>{{ form.email.label }}</p>

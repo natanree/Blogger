@@ -63,6 +63,8 @@ def edit_profile(user_id):
         if (user.get_password(eform.password.data)==False):
             flash('Invalid password')
             return redirect(url_for('auth.edit_profile', user_id=user.id))
+        if (eform.new_password.data is not None):
+            user.set_password(eform.new_password.data)
         user.first_name = eform.first_name.data
         user.last_name = eform.last_name.data
         user.email = eform.email.data
