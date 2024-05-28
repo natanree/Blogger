@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div>
+<div style="text-align: center;">
     <h1>Login</h1>
     {% if form %}
     <form action="" method="POST">
@@ -23,7 +23,8 @@
         
         <p>{{ form.submit() }}</p>
 
-        <p>New User?<a href="{{ url_for('auth.register') }}">Click to Register</a></p>
+        <p>New User?</p>
+        <a href="{{ url_for('auth.register') }}">Click to Register</a>
     </form>
     {% endif %}
 </div>
