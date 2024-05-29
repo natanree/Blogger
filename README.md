@@ -8,3 +8,6 @@ Code is based off arslanay smile app starter code
 ```
 py app.py
 ```
+default login
+username: test
+password: 1223
