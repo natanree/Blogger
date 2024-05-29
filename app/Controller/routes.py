@@ -18,7 +18,7 @@ bp_routes.template_folder = Config.TEMPLATE_FOLDER
 @bp_routes.route('/index',methods=['GET'])
 @login_required
 def index():
-    posts = Post.query.filter_by(user_id = current_user.id)
+    posts = Post.query.filter_by(user_id = current_user.id).order_by(Post.post_datetime.desc())
     return render_template('index.html', posts_query = posts)
 
 @bp_routes.route('/post',methods=['GET','POST'])
