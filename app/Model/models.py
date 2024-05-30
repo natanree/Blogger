@@ -58,6 +58,7 @@ class Post(db.Model):
     post_datetime = db.Column(db.DateTime, default = datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     comments = db.Relationship('Comment', backref='post', lazy='dynamic')
+    comment_count = db.Column(db.Integer,default=0)
     tags = db.Relationship(
         'Tag', secondary=post_tag,
         primaryjoin=(post_tag.c.post_id == id),

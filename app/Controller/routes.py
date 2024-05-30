@@ -9,17 +9,26 @@ from flask import current_app as app
 
 from app import db
 from app.Model.models import User, Post, Comment
-from app.Controller.forms import PostForm, CommentForm
+from app.Controller.forms import PostForm, CommentForm, SortForm
 
 bp_routes = Blueprint('routes', __name__)
 bp_routes.template_folder = Config.TEMPLATE_FOLDER
 
-@bp_routes.route('/', methods=['GET'])
-@bp_routes.route('/index',methods=['GET'])
+@bp_routes.route('/', methods=['GET','POST'])
+@bp_routes.route('/index',methods=['GET','POST'])
 @login_required
 def index():
+    sform = SortForm()
+    # default set to time
     posts = Post.query.filter_by(user_id = current_user.id).order_by(Post.post_datetime.desc())
-    return render_template('index.html', posts_query = posts)
+    # check sort form and change sorting accordingly
+    if (sform.choice.data=='Title'):
+        posts = Post.query.filter_by(user_id = current_user.id).order_by(Post.title.desc())
+    elif (sform.choice.data=='Date'):
+        posts = Post.query.filter_by(user_id = current_user.id).order_by(Post.post_datetime.desc())
+    elif (sform.choice.data=='Comments'):
+        posts = Post.query.filter_by(user_id = current_user.id).order_by(Post.comment_count.desc())
+    return render_template('index.html', posts_query = posts, form=sform)
 
 @bp_routes.route('/post',methods=['GET','POST'])
 @login_required
@@ -67,6 +76,8 @@ def comment(post_id):
     cform = CommentForm()
     if cform.validate_on_submit():
         thecomment = Comment(body = cform.body.data, post_id = thepost.id, user_id = current_user.id)
+        thepost.comment_count += 1
+        db.session.add(thepost)
         db.session.add(thecomment)
         db.session.commit()
         flash('Comment created successfully')

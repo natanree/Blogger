@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, TextAreaField, SubmitField
+from wtforms import StringField, TextAreaField, SubmitField, SelectField
 from wtforms_sqlalchemy.fields import QuerySelectMultipleField
 from wtforms.validators import DataRequired
 from wtforms.widgets import ListWidget, CheckboxInput
@@ -24,3 +24,7 @@ class PostForm(FlaskForm):
 class CommentForm(FlaskForm):
     body = TextAreaField('Comment', validators=[DataRequired()])
     submit = SubmitField('Comment')
+
+class SortForm(FlaskForm):
+    choice = SelectField('Choice', choices=['Title', 'Date', 'Comments'])
+    refresh = SubmitField('Refresh')
