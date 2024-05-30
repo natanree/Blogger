@@ -1,5 +1,6 @@
 from app import create_app, db
 from app.Model.models import User, Post, Tag
+from datetime import date
 import sys
 
 app = create_app()
@@ -19,7 +20,7 @@ def initDB(*args,**kwargs):
                 db.session.add(theTag)
             db.session.commit()
         if User.query.count() == 0:
-            user = User(username = 'test', first_name = 'John', last_name = 'Doe', email = 'test@gmail.com')
+            user = User(username = 'test', first_name = 'John', last_name = 'Doe', email = 'test@gmail.com', join_date = date.today())
             user.set_password('123')
             user.set_verification('ifawvcKvBd')
             user.preferred_tags.append(Tag.query.filter_by(id = 1).first())
