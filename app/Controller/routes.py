@@ -6,7 +6,7 @@ from flask import Blueprint, render_template, flash, redirect, url_for, request
 from config import Config
 from flask_login import login_required, current_user
 from flask import current_app as app
-
+from datetime import datetime, timezone
 from app import db
 from app.Model.models import User, Post, Comment
 from app.Controller.forms import PostForm, CommentForm, SortForm
@@ -35,7 +35,7 @@ def index():
 def post():
     pform = PostForm()
     if pform.validate_on_submit():
-        thepost = Post(title = pform.title.data, body = pform.body.data, user_id = current_user.id)
+        thepost = Post(title = pform.title.data, body = pform.body.data, user_id = current_user.id, post_datetime = datetime.now(timezone.utc))
         db.session.add(thepost)
         db.session.commit()
         flash("New blog post has been created!")
@@ -75,7 +75,7 @@ def comment(post_id):
         return redirect(url_for('routes.index'))
     cform = CommentForm()
     if cform.validate_on_submit():
-        thecomment = Comment(body = cform.body.data, post_id = thepost.id, user_id = current_user.id)
+        thecomment = Comment(body = cform.body.data, post_id = thepost.id, user_id = current_user.id, post_datetime = datetime.now(timezone.utc))
         thepost.comment_count += 1
         db.session.add(thepost)
         db.session.add(thecomment)

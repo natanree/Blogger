@@ -5,6 +5,7 @@ import random, string
 from flask import Blueprint, redirect, url_for, flash, render_template, request
 from config import Config
 from flask_login import current_user, login_user, login_required, logout_user
+from datetime import date
 from app.Controller.auth_forms import RegistrationForm, LoginForm, EditProfileForm
 from app.Model.models import User
 from app import db
@@ -18,7 +19,7 @@ def register():
         return redirect(url_for('routes.index'))
     rform = RegistrationForm()
     if rform.validate_on_submit():
-        user = User(username = rform.username.data, first_name = rform.first_name.data, last_name = rform.last_name.data, email = rform.email.data)
+        user = User(username = rform.username.data, first_name = rform.first_name.data, last_name = rform.last_name.data, email = rform.email.data, join_date = date.today)
         user.set_password(rform.password.data)
         ver = ''.join(random.choices(string.ascii_letters + string.digits, k=10))
         user.set_verification(ver)

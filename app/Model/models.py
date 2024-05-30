@@ -1,7 +1,6 @@
 from app import db, login
 
 from flask_login import UserMixin
-from datetime import date, datetime, UTC
 from werkzeug.security import generate_password_hash, check_password_hash
 
 @login.user_loader
@@ -25,7 +24,7 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(64))
     last_name = db.Column(db.String(64))
     email = db.Column(db.String(128))
-    join_date = db.Column(db.Date, default = date.today)
+    join_date = db.Column(db.Date)
     posts = db.Relationship('Post', backref='poster', lazy='dynamic')
     comments = db.Relationship('Comment', backref='commenter', lazy='dynamic')
     preferred_tags = db.Relationship(
@@ -55,7 +54,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200))
     body = db.Column(db.String(1000))
-    post_datetime = db.Column(db.DateTime, default = datetime.now(UTC))
+    post_datetime = db.Column(db.DateTime)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     comments = db.Relationship('Comment', backref='post', lazy='dynamic')
     comment_count = db.Column(db.Integer,default=0)
@@ -69,7 +68,7 @@ class Comment(db.Model):
     __tablename__='comment'
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(1000))
-    post_datetime = db.Column(db.DateTime, default = datetime.now(UTC))
+    post_datetime = db.Column(db.DateTime)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
