@@ -10,7 +10,7 @@ def make_shell_context():
 
 @app.before_request
 def initDB(*args,**kwargs):
-    if app.got_first_request:
+    if app._got_first_request:
         db.create_all()
         if Tag.query.count() == 0:
             tags = ['tech', 'diary']
